@@ -1,23 +1,34 @@
-sqlite3 = require("sqlite3")
+import SQLite from 'react-native-sqlite-storage';
 
 function begin() {
-    const db = new sqlite3.Database('./src/data/ownerWarehouse.db');
-    
     const create_tb_expanse = `
-        CREATE TABLE IF NOT EXISTS TB_EXPANSE (
-            ID INTEGER PRIMARY KEY, 
-            DESCRIPTION VARCHAR(500) NOT NULL,
-            VALUE REAL NOT NULL,
-            TYPE INTEGER(2)
-        );
+    CREATE TABLE IF NOT EXISTS TB_EXPANSE (
+        ID INTEGER PRIMARY KEY, 
+        DESCRIPTION VARCHAR(500) NOT NULL,
+        VALUE REAL NOT NULL,
+        TYPE INTEGER(2)
+    );
     `
-
-    db.run(create_tb_expanse)
+    const db = new SQLite.openDatabase(
+        {name: 'ownerWarehouse.db', location: 'default'},
+        (_) => {
+            db.transaction(tx => {
+                tx.executeSql(
+                    create_tb_expanse,
+                    [],
+                    (tx, results) => {
+                        console.log('Database connection established.')
+                    }
+                )
+            })
+        },
+        (_) => {console.error('error')}
+    )
 
     return db
 }
 
-function insert_expanse(connection, description, value, type) {
+function insert_expanse(db, description, value, type) {
     const insert_tb_expanse = `
         INSERT INTO TB_EXPANSE (
             DESCRIPTION,
@@ -30,14 +41,14 @@ function insert_expanse(connection, description, value, type) {
         );
     `
 
-    connection.run(insert_tb_expanse)
-    
-    connection.each("SELECT ID, DESCRIPTION, VALUE, TYPE FROM TB_EXPANSE", (err, row) => {
-        console.log(row)
+    db.transaction(tx => {
+        tx.executeSql(    
+            insert_tb_expanse,
+            [],
+            (_) => {
+                tx.executeSql("SELECT ID, DESCRIPTION, VALUE, TYPE FROM TB_EXPANSE", [], (tx, result) => console.log(result.rows.item(1)))
+            })
     })
 }
 
-const connection = begin()
-
-export default connection
-export {insert_expanse}
+export {insert_expanse, begin}
