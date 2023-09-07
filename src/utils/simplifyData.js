@@ -8,7 +8,7 @@ function get_now_datetime() {
     const hour = datetime.getHours()
     const minute = datetime.getMinutes()
     const seconds = datetime.getSeconds()
-    console.log(`${year}-${month}-${day} ${hour}:${minute}:${seconds}`)
+
     return `${year}-${month}-${day} ${hour}:${minute}:${seconds}`
 }
 

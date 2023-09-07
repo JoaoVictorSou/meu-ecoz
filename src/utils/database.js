@@ -57,4 +57,16 @@ function insert_expense(db, description, value, type) {
     }
 }
 
-export {insert_expense, begin}
+function delete_all_expenses(db) {
+    const delete_tb_expense = `
+        DELETE FROM TB_EXPENSE;
+    `
+    
+    db.transaction(tx => {
+        tx.executeSql(delete_tb_expense, [], (tx, results) => {
+            console.log(`deleted rows: ${results.rowsAffected}`)
+        })
+    })
+}
+
+export {insert_expense, begin, delete_all_expenses}

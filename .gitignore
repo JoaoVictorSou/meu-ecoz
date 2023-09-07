@@ -134,4 +134,4 @@ src/data/ownerWarehouse.db
 
 # Android
 android/.gradle
-android/app
+android/app/build
