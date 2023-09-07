@@ -12,4 +12,17 @@ function get_now_datetime() {
     return `${year}-${month}-${day} ${hour}:${minute}:${seconds}`
 }
 
-export { get_now_datetime }
+function informed_moment(datetime) {
+    let moment = new Date(datetime)
+
+    const year = String(moment.getFullYear()).slice(2)
+    const month = String(moment.getMonth()).padStart(2, '0')
+    const hour = String(moment.getHours()).padStart(2, '0')
+    const minute = String(moment.getMinutes()).padStart(2, '0')
+
+    moment = `${month}/${year} ${hour}:${minute}`
+    
+    return moment 
+}
+
+export { get_now_datetime, informed_moment }

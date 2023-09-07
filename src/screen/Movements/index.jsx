@@ -7,7 +7,7 @@ import ExpenseList from "./components/ExpenseList";
 const db = begin()
 
 const Movements = (_) => {
-    const [money, onChangeText] = useState('0.00');
+    const [money, onChangeText] = useState('0');
     const [description, onChangeDescription] = useState('')
     const question = 'O que andou comprando?'
 
@@ -18,6 +18,8 @@ const Movements = (_) => {
             title = 'Informar'
             onPress={_ => {
                 insert_expense(db, description, money, 1)
+                onChangeText('0')
+                onChangeDescription('')
             }}
         />
         <Button
