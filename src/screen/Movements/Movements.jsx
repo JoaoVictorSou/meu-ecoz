@@ -25,6 +25,7 @@ const Movements = (props) => {
                                 <Text>{item['DESCRIPTION']}</Text>
                                 <Text>{item['VALUE']}</Text>
                                 <Text>{item['TYPE']}</Text>
+                                <Text>{item['CREATED_DATE']}</Text>
                             </View>
                         )
                     }

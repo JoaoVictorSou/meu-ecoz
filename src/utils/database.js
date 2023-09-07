@@ -1,4 +1,5 @@
 import SQLite from 'react-native-sqlite-storage';
+import { get_now_datetime } from './simplifyData';
 
 function begin() {
     const create_tb_expanse = `
@@ -6,7 +7,8 @@ function begin() {
         ID INTEGER PRIMARY KEY, 
         DESCRIPTION VARCHAR(500) NOT NULL,
         VALUE REAL NOT NULL,
-        TYPE INTEGER(2)
+        TYPE INTEGER(2),
+        CREATED_DATE DATE NOT NULL
     );
     `
     const db = new SQLite.openDatabase(
@@ -34,11 +36,13 @@ function insert_expense(db, description, value, type) {
             INSERT INTO TB_EXPENSE (
                 DESCRIPTION,
                 VALUE,
-                TYPE
+                TYPE,
+                CREATED_DATE
             ) VALUES (
                 '${description}',
                 ${value},
-                ${type}
+                ${type},
+                '${get_now_datetime()}'
             );
         `
     

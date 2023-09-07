@@ -131,3 +131,7 @@ dist
 
 # Particular data
 src/data/ownerWarehouse.db
+
+# Android
+android/.gradle
+android/app
