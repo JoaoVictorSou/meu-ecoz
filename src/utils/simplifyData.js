@@ -3,8 +3,8 @@ function get_now_datetime() {
     const datetime = new Date()
     
     const year = datetime.getFullYear()
-    const month = datetime.getMonth()
-    const day = datetime.getDay()
+    const month = datetime.getMonth()+1
+    const day = datetime.getDate()
     const hour = datetime.getHours()
     const minute = datetime.getMinutes()
     const seconds = datetime.getSeconds()
@@ -15,12 +15,12 @@ function get_now_datetime() {
 function informed_moment(datetime) {
     let moment = new Date(datetime)
 
-    const year = String(moment.getFullYear()).slice(2)
-    const month = String(moment.getMonth()).padStart(2, '0')
+    const month = String(moment.getMonth()+1).padStart(2, '0')
+    const day = String(moment.getDate()).padStart(2, '0')
     const hour = String(moment.getHours()).padStart(2, '0')
     const minute = String(moment.getMinutes()).padStart(2, '0')
 
-    moment = `${month}/${year} ${hour}:${minute}`
+    moment = `${day}/${month} ${hour}:${minute}`
     
     return moment 
 }
